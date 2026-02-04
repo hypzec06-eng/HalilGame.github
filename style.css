@@ -1,0 +1,214 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #E67E22; /* göz yormayan turuncu */
+    font-family: 'Comic Sans MS', cursive;
+    overflow: hidden;
+    user-select: none;
+}
+
+#gameContainer {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+/* 🔝 Sol üstte "Halil Game" */
+#topLogo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #fff;
+    background: rgba(0,0,0,0.4);
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: 2px solid #fff;
+    letter-spacing: 2px;
+}
+
+/* 🎯 Oyun Başlığı (ortada) */
+#gameTitle {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 34px;
+    font-weight: bold;
+    color: #fff;
+    background: rgba(0,0,0,0.4);
+    padding: 12px 32px;
+    border-radius: 18px;
+    border: 3px solid #fff;
+}
+
+/* 🔘 Sol taraftaki butonlar */
+#leftButtons {
+    position: absolute;
+    left: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.button-circle {
+    width: 95px;
+    height: 95px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #555, #222);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 4px solid #fff;
+    transition: transform 0.15s ease;
+}
+
+.button-circle:hover {
+    transform: scale(1.1);
+}
+
+/* 🔫 SİLAH BOYUTLARI */
+.button-circle img {
+    width: 75px;
+    height: 75px;
+}
+
+/* 📏 Halil ve Sopa +10 daha büyük */
+#halilButton img, #stickButton img {
+    width: 85px;
+    height: 85px;
+}
+
+/* 🧍 Penny ortada */
+#pennyContainer {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Penny görselleri */
+#pennyContainer img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 340px;
+    height: auto;
+    display: none;
+}
+
+/* 💥 Shake animasyonu */
+.shake {
+    animation: shake 0.35s linear;
+}
+
+@keyframes shake {
+    0%   { transform: translate(-50%, -50%) rotate(0deg) scale(1); filter: brightness(1); }
+    25%  { transform: translate(-49%, -50%) rotate(2deg) scale(1.08); filter: brightness(1.3); }
+    50%  { transform: translate(-51%, -50%) rotate(-3deg) scale(1.05); filter: brightness(0.9); }
+    75%  { transform: translate(-49%, -50%) rotate(3deg) scale(1.08); filter: brightness(1.2); }
+    100% { transform: translate(-50%, -50%) rotate(0deg) scale(1); filter: brightness(1); }
+}
+
+/* 💢 Vuruş ışığı efekti */
+#hitEffect {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ffff00 0%, #ff6600 40%, rgba(255,0,0,0.8) 70%, transparent 100%);
+    display: none;
+    pointer-events: none;
+    animation: hitPulse 0.4s ease-out;
+}
+
+@keyframes hitPulse {
+    0% {
+        transform: translate(-50%, -50%) scale(0.4);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.4);
+        opacity: 0.85;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1.8);
+        opacity: 0;
+    }
+}
+
+/* 🧮 Vuruş sayacı */
+#hitCounter {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    background: rgba(0,0,0,0.5);
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: 2px solid #fff;
+}
+
+/* 👇 Sol alt yazı - ooc kin yoktur */
+#signature {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    background: rgba(0,0,0,0.3);
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: 2px solid #fff;
+}
+
+/* ⚔️ Silah saldırı animasyonu */
+.attack-weapon {
+    position: absolute !important;
+    z-index: 100 !important;
+    animation: weaponAttack 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* 💪 Daha yumuşak saldırı */
+@keyframes weaponAttack {
+    0% {
+        transform: translateY(-50%) scale(1) rotate(0deg);
+        left: 160px;
+        opacity: 1;
+    }
+    30% {
+        transform: translateY(-50%) scale(1.25) rotate(-8deg);
+        left: 45%;
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-50%) scale(1.4) rotate(-6deg);
+        left: 48%;
+        opacity: 0.95;
+    }
+    100% {
+        transform: translateY(-50%) scale(1.1) rotate(0deg);
+        left: 50%;
+        opacity: 0;
+    }
+}
+
+/* Saldırı boyut farkları */
+.attack-weapon.sopa-weapon, .attack-weapon.halil-weapon {
+    width: 160px !important;
+    height: 160px !important;
+}
+
+.attack-weapon.yumruk-weapon {
+    width: 140px !important;
+    height: 140px !important;
+}
+
