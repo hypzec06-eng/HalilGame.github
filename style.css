@@ -1,0 +1,227 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #E67E22;
+  font-family: 'Comic Sans MS', cursive;
+  overflow: hidden;
+  user-select: none;
+}
+
+#gameContainer {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+/* Üst logo */
+#topLogo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #fff;
+  background: rgba(0,0,0,0.4);
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: 2px solid #fff;
+  letter-spacing: 2px;
+}
+
+#gameTitle {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 34px;
+  font-weight: bold;
+  color: #fff;
+  background: rgba(0,0,0,0.4);
+  padding: 12px 32px;
+  border-radius: 18px;
+  border: 3px solid #fff;
+}
+
+/* Butonlar */
+#leftButtons {
+  position: absolute;
+  left: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.button-circle {
+  width: 95px;
+  height: 95px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #555, #222);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 4px solid #fff;
+  transition: .15s;
+  cursor: pointer;
+}
+
+.button-circle:hover { transform: scale(1.1); }
+.button-circle img { width: 75px; height: 75px; }
+#halilButton img, #stickButton img { width: 85px; height: 85px; }
+
+/* Penny alanı */
+#pennyContainer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+#pennyContainer img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 340px;
+  display: none;
+}
+
+/* Shake animasyonu */
+.shake { animation: shake .35s linear; }
+@keyframes shake {
+  0%{filter:brightness(1);} 25%{transform:translate(-49%,-50%)rotate(2deg);filter:brightness(1.2);}
+  50%{transform:translate(-51%,-50%)rotate(-3deg);filter:brightness(0.9);}
+  75%{transform:translate(-49%,-50%)rotate(3deg);filter:brightness(1.1);}
+  100%{transform:translate(-50%,-50%)rotate(0);filter:brightness(1);}
+}
+
+/* Can barı biraz aşağı alındı 👇 */
+#healthContainer {
+  position: absolute;
+  top: 160px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 350px;
+  height: 24px;
+  background: rgba(0,0,0,0.5);
+  border: 2px solid #fff;
+  border-radius: 12px;
+}
+#healthBar {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, green, yellow, red);
+  transition: width 0.3s;
+}
+
+/* CK yazıları */
+#ckText, #ckResult {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  text-shadow: 2px 2px 4px #000;
+  font-size: 28px;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity .4s;
+}
+#ckText { top: 220px; }
+#ckResult { top: 260px; }
+
+/* Tekrar oyna butonu */
+#replayButton {
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #e67e22;
+  color: #fff;
+  border: 2px solid #fff;
+  padding: 10px 28px;
+  border-radius: 8px;
+  font-size: 20px;
+  cursor: pointer;
+  display: none;
+}
+#replayButton:hover { background: #ffb347; }
+
+/* Efekt */
+#hitEffect {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle,#ffff00 0%,#ff6600 40%,rgba(255,0,0,0.8) 70%,transparent 100%);
+  display: none;
+  pointer-events: none;
+}
+
+/* Sayaç */
+#hitCounter {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+  background: rgba(0,0,0,0.5);
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: 2px solid #fff;
+}
+
+/* Alt imza */
+#signature {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: #fff;
+  background: rgba(0,0,0,0.3);
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 2px solid #fff;
+}
+/* --- SİLAH ANİMASYONU --- */
+
+/* Dinamik olarak oluşturulacak silah görselinin temel stili */
+.anim-weapon {
+  position: absolute;
+  top: 50%;
+  left: 15%; /* Butonların olduğu hiza */
+  width: 200px; /* Görsel boyutu */
+  transform: translateY(-50%) scale(0.5); /* Başlangıçta küçük */
+  pointer-events: none; /* Tıklamayı engellemesin */
+  z-index: 999; /* Penny'nin üstünde görünsün */
+  opacity: 0;
+}
+
+/* Vuruş Hareketi */
+.strike-motion {
+  animation: smashHit 0.4s ease-out forwards;
+}
+
+@keyframes smashHit {
+  0% {
+    opacity: 0;
+    left: 15%;
+    transform: translateY(-50%) rotate(-45deg) scale(0.5);
+  }
+  20% {
+    opacity: 1; /* Görünür ol */
+  }
+  50% {
+    /* Tam vuruş anı (Penny'nin üzeri) */
+    left: 45%; 
+    transform: translateY(-50%) rotate(0deg) scale(1.2);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    /* Kayboluş */
+    left: 50%;
+    transform: translateY(-50%) rotate(45deg) scale(1.1);
+    opacity: 0;
+  }
+}
